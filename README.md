@@ -1,70 +1,94 @@
-Resume Clustering and Skill Search Application
+
+# Resume Clustering and Skill Search Application
+
+
 This project is a web application for uploading, clustering, and searching resumes based on specific skills. It uses Flask for the backend, PostgreSQL for the database, and Bootstrap for styling. Users can upload CSV files of resumes for clustering or perform a skill-based search across resumes.
 
-Table of Contents
-Features
-Tech Stack
-Installation
-Database Structure
-Usage
-Features
-Upload CSV files containing resumes.
-Cluster resumes based on textual similarity.
-Search resumes for specific skills.
-Visualize clustering results.
-Tech Stack
-Backend: Flask
-Frontend: HTML, CSS (Bootstrap)
-Database: PostgreSQL
-Libraries: Pandas, scikit-learn, Chart.js
-Installation
+
+## Table of contents
+
+ - [Features]()
+ - [Tech Stack]()
+ - [Installation]()
+  - [Database Structure]()
+ - [Usage]()
+
+
+## Features
+
+- Upload CSV files containing resumes.
+- Cluster resumes based on textual similarity.
+- Search resumes for specific skills.
+- Visualize clustering results.
+
+## Tech Stack
+
+**Backend:** Flask
+
+**Frontend:** HTML, CSS (Bootstrap)
+
+**Database:** PostgreSQL
+
+**Libraries:** Pandas, scikit-learn, Chart.js
+
+## Installation
 Prerequisites
-Python (version 3.7 or higher)
-PostgreSQL (version 12 or higher)
-Git
-Steps to Set Up the Project
-Clone the Repository
 
-bash
-Copy code
-git clone https://github.com/your-username/resume-clustering.git
-cd resume-clustering
-Set Up Virtual Environment
+1)Python (version 3.7 or higher)
 
-bash
-Copy code
-python3 -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-Install Requirements
+2)PostgreSQL (version 12 or higher)
 
-bash
-Copy code
-pip install -r requirements.txt
-Configure PostgreSQL Database
+3)Git
 
-Open PostgreSQL CLI or pgAdmin and create a new database and user.
+### Steps to Set Up the Project
 
-sql
-Copy code
+1. Clone the Repository
+
+```bash
+  git clone https://github.com/your-username/resume-clustering.git
+  cd resume-clustering
+```
+2. Set Up Virtual Environment
+
+```bash
+  python3 -m venv venv
+  source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
+
+3. Install Requirements
+
+```bash
+  pip install -r requirements.txt
+```
+4. Configure PostgreSQL Database 
+
+    Open PostgreSQL CLI or pgAdmin and create a new database and user.
+
+```bash
 CREATE DATABASE resume_db;
 CREATE USER resume_user WITH PASSWORD 'your_password';
 ALTER ROLE resume_user SET client_encoding TO 'utf8';
 ALTER ROLE resume_user SET default_transaction_isolation TO 'read committed';
 ALTER ROLE resume_user SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE resume_db TO resume_user;
-Update your database configuration in config.py (or .env file if used):
 
-python
-Copy code
+```
+
+
+ Update your database configuration in config.py (or .env file if used):
+
+```bash
 DATABASE_URI = 'postgresql://resume_user:your_password@localhost:5432/resume_db'
-Initialize Database Tables
 
-Use the following structure to set up tables required for the project:
+```
 
-Database Structure
+5. Initialize Database Tables
 
-sql
-Copy code
+    Use the following structure to set up tables required for the project:
+
+    Database Structure
+
+```bash
 CREATE TABLE resumes (
     id SERIAL PRIMARY KEY,
     filename VARCHAR(255) NOT NULL,
@@ -78,44 +102,41 @@ CREATE TABLE clusters (
     resume_id INT REFERENCES resumes(id),
     summary TEXT
 );
-Run the following commands to initialize the tables:
 
-bash
-Copy code
+```
+
+
+ Run the following commands to initialize the tables:
+
+```bash
 python manage.py db init
 python manage.py db migrate
 python manage.py db upgrade
-Run the Application
 
-Start the Flask application by running:
 
-bash
-Copy code
+```
+
+6. Run the Application
+
+   Start the Flask application by running:
+
+```bash
 flask run
+
+```
+
 The application will be available at http://127.0.0.1:5000.
+## Usage/Examples
 
-Usage
-Uploading Resumes for Clustering
+#### Uploading Resumes for Clustering
 
-On the homepage, upload a CSV file containing resumes for clustering.
-The application will display the results on a new page with clusters and a bar chart.
-Searching for Skills in Resumes
+1)On the homepage, upload a CSV file containing resumes for clustering. 
 
-On the homepage, enter a skill to search for within resumes.
-The search results page will display resumes that contain the specified skill.
-Database Structure
-resumes Table
+2)The application will display the results on a new page with clusters and a bar chart.
 
-Column Name	Data Type	Description
-id	SERIAL	Unique identifier for each resume
-filename	VARCHAR	Filename of the uploaded resume
-content	TEXT	Content of the resume
-skills	TEXT[]	List of extracted skills
-clusters Table
+#### Searching for Skills in Resumes
 
-Column Name	Data Type	Description
-id	SERIAL	Unique identifier for each cluster
-cluster_id	INT	Identifier for each cluster group
-resume_id	INT	Foreign key referencing resumes
-summary	TEXT	Summary of the cluster content
+1)On the homepage, enter a skill to search for within resumes.
+
+2) The search results page will display resumes that contain the specified skill.
 
