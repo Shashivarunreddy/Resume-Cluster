@@ -118,3 +118,4 @@ id	SERIAL	Unique identifier for each cluster
 cluster_id	INT	Identifier for each cluster group
 resume_id	INT	Foreign key referencing resumes
 summary	TEXT	Summary of the cluster content
+
